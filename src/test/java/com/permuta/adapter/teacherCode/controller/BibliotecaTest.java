@@ -72,8 +72,6 @@ public class BibliotecaTest {
     @Test
     public void obtenerJuegosUsuario_UsuarioValido_RetornaListaVacia() throws ValidationException {
 
-
-        
         try{
             bibliotecaController.obtenerJuegosUsuario(usuarioValido.id());
         } catch (ValidationException e) {
@@ -81,7 +79,6 @@ public class BibliotecaTest {
             assertTrue(true);
         }
 
-       
     }
 
     @Test

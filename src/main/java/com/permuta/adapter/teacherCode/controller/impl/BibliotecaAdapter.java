@@ -45,7 +45,12 @@ public class BibliotecaAdapter implements IBibliotecaController {
 
     @Override
     public void eliminarJuegoBiblioteca(Long idUsuario, Long idJuego) throws ValidationException {
-        bibliotecaControlador.eliminarJuegoBiblioteca(idUsuario, idJuego);
+        try {
+            bibliotecaControlador.eliminarJuegoBiblioteca(idUsuario, idJuego);
+        } catch (ExcepcionValidacion e) {
+            // convertir a ValidationException con los detalles que necesites
+            throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
+        }
     }
 
     @Override

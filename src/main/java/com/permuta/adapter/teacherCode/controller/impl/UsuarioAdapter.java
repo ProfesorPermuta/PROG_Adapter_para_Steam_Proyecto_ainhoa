@@ -35,7 +35,7 @@ public class UsuarioAdapter implements IUsuarioController {
     @Override
     public UsuarioDTO consultarPerfil(long id) {
         try {
-            var result = usuarioControlador.consultarPerfil(id);
+            var result = usuarioControlador.consultarPerfil(id, null);
             return UsuarioDTOMapper.toTeacher(result);
         } catch (ExcepcionValidacion e) {
             return null;
@@ -44,14 +44,20 @@ public class UsuarioAdapter implements IUsuarioController {
 
     @Override
     public UsuarioDTO consultarPerfil(String nombreUsuario) {
-        throw new UnsupportedOperationException("La alumna no implementa busqueda por nombre de usuario en el controlador");
+        try {
+            // Se pasa idUsuario = 0 porque se usará el nombreUsuario
+            var result = usuarioControlador.consultarPerfil(0L, nombreUsuario);
+            return UsuarioDTOMapper.toTeacher(result);
+        } catch (ExcepcionValidacion e) {
+            return null;
+        }
     }
 
     @Override
     public UsuarioDTO aniadirSaldo(long id, double cantidad) throws ValidationException {
         try {
             usuarioControlador.anadirSaldoCartera(cantidad, id);
-            return UsuarioDTOMapper.toTeacher(usuarioControlador.consultarPerfil(id));
+            return UsuarioDTOMapper.toTeacher(usuarioControlador.consultarPerfil(id, null));
         } catch (ExcepcionValidacion e) {
             throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
         }

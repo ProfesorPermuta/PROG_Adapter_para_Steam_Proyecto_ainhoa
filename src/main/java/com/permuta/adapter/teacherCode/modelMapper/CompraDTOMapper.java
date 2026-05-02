@@ -61,7 +61,7 @@ public class CompraDTOMapper {
             juegoDTO,
             studentDTO.getFechaCompra(),
             metodoPago,                         // CompraMetodoPagoEnum -> MetodoPago
-            studentDTO.getPrecioOriginal(),        // precioSinDes -> precioSinDescuento
+            studentDTO.getPrecioBase(),        // precioSinDes -> precioSinDescuento
             studentDTO.getPorcentajeDescuento(),            // descuento -> descuentoAplicado
             estadoCompra                          // CompraEstadoEnum -> EstadoCompra
         );

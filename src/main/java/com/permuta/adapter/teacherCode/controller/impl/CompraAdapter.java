@@ -6,6 +6,7 @@ import com.permuta.adapter.teacherCode.model.dto.CompraDTO;
 import com.permuta.adapter.teacherCode.model.dto.ErrorDto;
 import com.permuta.adapter.teacherCode.model.enums.ErrorType;
 import com.permuta.adapter.teacherCode.model.form.CompraForm;
+import com.permuta.adapter.teacherCode.modelMapper.CompraFormMapper;
 import org.ainhoamarfer.controlador.CompraControlador;
 import org.ainhoamarfer.excepciones.ExcepcionValidacion;
 import com.permuta.adapter.teacherCode.modelMapper.CompraDTOMapper;
@@ -22,9 +23,9 @@ public class CompraAdapter implements ICompraController {
 
     @Override
     public CompraDTO realizarCompra(CompraForm form) throws ValidationException {
-        var metodoPago = org.ainhoamarfer.modelo.enums.CompraMetodoPagoEnum.valueOf(form.metodoPago().name());
+        var alumnoForm = CompraFormMapper.toStudent(form);  // ← mapeas el form del profesor al de la alumna
         try {
-            var result = compraControlador.realizarCompra(form.idUsuario(), form.idJuego(), metodoPago);
+            var result = compraControlador.realizarCompra(alumnoForm);  // ← pasas el formulario
             return CompraDTOMapper.toTeacher(result);
         } catch (ExcepcionValidacion e) {
             throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
@@ -33,7 +34,12 @@ public class CompraAdapter implements ICompraController {
 
     @Override
     public CompraDTO procesarPago(long idCompra) throws ValidationException {
-        throw new UnsupportedOperationException("La alumna requiere metodoPago en procesarPago, no implementable sin parametro adicional");
+        try {
+            var result = compraControlador.procesarPago(idCompra);
+            return CompraDTOMapper.toTeacher(result);
+        } catch (ExcepcionValidacion e) {
+            throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
+        }
     }
 
     @Override
@@ -48,6 +54,11 @@ public class CompraAdapter implements ICompraController {
 
     @Override
     public CompraDTO solicitarReembolso(long idCompra) throws ValidationException {
-        throw new UnsupportedOperationException("La alumna no ha implementado solicitarReembolso");
+        try {
+            var result = compraControlador.solicitarReembolso(idCompra);
+            return CompraDTOMapper.toTeacher(result);
+        } catch (ExcepcionValidacion e) {
+            throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
+        }
     }
 }

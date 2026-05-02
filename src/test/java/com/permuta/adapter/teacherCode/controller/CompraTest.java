@@ -294,7 +294,7 @@ public class CompraTest {
                                 MetodoPago.TARJETA_CREDITO,
                                 29.99,
                                 0,
-                                null));
+                                EstadoCompra.PENDIENTE));
 
                 var procesada = compraController.procesarPago(compra.id());
 

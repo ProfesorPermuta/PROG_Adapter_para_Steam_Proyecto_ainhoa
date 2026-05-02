@@ -41,7 +41,7 @@ public final class AdapterFactory {
         UsuarioControlador usuarioCtrl = new UsuarioControlador(usuarioRepo);
         JuegosControlador juegoCtrl = new JuegosControlador(juegoRepo);
         CompraControlador compraCtrl = new CompraControlador(compraRepo, juegoRepo, usuarioRepo, bibliotecaRepo);
-        ResenasControlador resenasCtrl = new ResenasControlador(resenaRepo, bibliotecaRepo);
+        ResenasControlador resenasCtrl = new ResenasControlador(resenaRepo, bibliotecaRepo, juegoRepo, usuarioRepo);
         BibliotecaControlador bibliotecaCtrl = new BibliotecaControlador(bibliotecaRepo, usuarioRepo, juegoRepo);
 
         return new AdapterBundle(

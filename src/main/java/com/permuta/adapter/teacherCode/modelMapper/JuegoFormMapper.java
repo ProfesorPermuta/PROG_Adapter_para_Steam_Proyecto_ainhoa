@@ -40,7 +40,7 @@ public class JuegoFormMapper {
             teacherForm.desarrollador(),
             teacherForm.fechaLanzamiento(),
             teacherForm.precioBase(),
-            (double) teacherForm.descuentoActual(),  // int -> Double
+            teacherForm.descuentoActual(),  // int -> Double
             teacherForm.categoria(),
             idiomas,                                 // String[] -> String
             clasificacion,                           // ClasificacionEdad -> JuegoClasificacionEdad

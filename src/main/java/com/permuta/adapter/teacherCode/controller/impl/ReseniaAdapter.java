@@ -48,10 +48,15 @@ public class ReseniaAdapter implements IReseniaController {
 
     @Override
     public List<ResenaDTO> listarResenasJuego(long idJuego) throws ValidationException {
-        var results = resenasControlador.verResenasJuego(idJuego, "", "recientes");
-        return results.stream()
-            .map(ResenaDTOMapper::toTeacher)
-            .collect(Collectors.toList());
+        try {
+            var results = resenasControlador.verResenasJuego(idJuego, "", "recientes");
+            return results.stream()
+                    .map(ResenaDTOMapper::toTeacher)
+                    .collect(Collectors.toList());
+        } catch (ExcepcionValidacion e) {
+            // Convertir la excepción de la alumna a la del profesor
+            throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
+        }
     }
 
     @Override

@@ -37,7 +37,7 @@ public class CompraFormMapper {
             teacherForm.idJuego(),
             LocalDate.now(),                              // @CAMPO_NO_EXISTE: fechaCompra no existe en el form del profesor
             teacherForm.precioSinDescuento(),             // precioSinDescuento -> precioSinDes
-            (double) teacherForm.descuentoAplicado(),     // int -> Double descuento
+            teacherForm.descuentoAplicado(),     // int -> Double descuento
             estadoCompra,                                 // EstadoCompra -> CompraEstadoEnum
             metodoPago                                    // MetodoPago -> CompraMetodoPagoEnum
         );

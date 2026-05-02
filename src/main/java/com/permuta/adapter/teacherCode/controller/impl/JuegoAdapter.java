@@ -51,13 +51,23 @@ public class JuegoAdapter implements IJuegoController {
 
     @Override
     public List<JuegoDTO> listarCatalogo() {
-        throw new UnsupportedOperationException("La alumna ha comentado el metodo consultarCatalogo, no esta implementado");
+        try {
+            var results = juegosControlador.consultarCatalogo(null);
+            // Filtramos solo los juegos con estado DISPONIBLE
+            return results.stream()
+                    .filter(juego -> juego.getEstado() == org.ainhoamarfer.modelo.enums.JuegoEstado.DISPONIBLE)
+                    .map(JuegoDTOMapper::toTeacher)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            // Si algo falla, devolvemos lista vacía (la interfaz no lanza excepción)
+            return List.of();
+        }
     }
 
     @Override
     public JuegoDTO aplicarDescuento(long id, int descuento) throws ValidationException {
         try {
-            var result = juegosControlador.aplicarDescuento(id, (double) descuento);
+            var result = juegosControlador.aplicarDescuento(id, descuento);
             return JuegoDTOMapper.toTeacher(result);
         } catch (ExcepcionValidacion e) {
             throw new ValidationException(List.of(new ErrorDto("error", ErrorType.FORMATO_INVALIDO)));
